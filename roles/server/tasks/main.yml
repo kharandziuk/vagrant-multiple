@@ -4,14 +4,14 @@
       - nc
 - name: Check if port is listening
   wait_for:
-    port: 1500
+    port: "{{ port }}"
     delay: 5
     timeout: 10
-    msg: "Timeout waiting for 1500 to respond"
+    msg: "Timeout waiting for {{ port }} to respond"
   register: port_check
   ignore_errors: yes
 
 - name: start simple http server in background
-  shell: while true; do echo -e "HTTP/1.1 200 OK\n\n $(date)" | nohup nc -l 0.0.0.0 1500; done |& logger &
+  shell: while true; do echo -e "HTTP/1.1 200 OK\n\n $(date)" | nohup nc -l 0.0.0.0 {{ port }}; done |& logger &
   when: port_check.failed == true
 
