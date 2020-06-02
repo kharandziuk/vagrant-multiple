@@ -1,0 +1,6 @@
+- name: vault.yml | MG Server
+  hosts: all
+  become: True
+  roles:
+    - server
+
